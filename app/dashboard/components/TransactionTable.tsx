@@ -1,21 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Filter, Trash2 } from "lucide-react";
+import { Search, Filter, Trash2, TrendingUp, TrendingDown } from "lucide-react";
 import { useRole } from "../context/RoleContext";
 import { useTransactions } from "../context/TransactionContext";
 
-export default function TransactionTable() {
+export default function TransactionTable({ limit }: { limit?: number }) {
   const { isAdmin } = useRole();
   const { transactions, deleteTransaction } = useTransactions();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<"All" | "Income" | "Expense">("All");
 
-  const filteredTransactions = transactions.filter((tx) => {
+  let filteredTransactions = transactions.filter((tx) => {
     const matchesSearch = tx.category.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filterType === "All" || tx.type === filterType;
     return matchesSearch && matchesFilter;
   });
+
+  if (limit) {
+    filteredTransactions = filteredTransactions.slice(0, limit);
+  }
+
+  // Calculate max amount for the visual volume bars
+  const maxAmount = filteredTransactions.length > 0 
+    ? Math.max(...filteredTransactions.map(tx => tx.amount)) 
+    : 1;
 
   return (
     <div className="relative rounded-2xl p-[1px] bg-gradient-to-b from-white/10 to-transparent shadow-2xl overflow-hidden h-full">
@@ -70,20 +79,39 @@ export default function TransactionTable() {
                     <td className="whitespace-nowrap py-5 pl-6 pr-3 text-sm text-[#888] font-mono tracking-tight">{tx.date}</td>
                     <td className="whitespace-nowrap px-4 py-5 text-sm font-bold text-[#e5e5e5]">{tx.category}</td>
                     <td className="whitespace-nowrap px-4 py-5 text-sm">
-                      <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold border ${
-                        tx.type === "Income" 
-                          ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]" 
-                          : "bg-red-500/10 text-red-400 border-red-500/20 shadow-[0_0_10px_rgba(239,68,68,0.1)]"
-                      }`}>
-                        <div className={`w-1.5 h-1.5 rounded-full mr-2 ${tx.type === "Income" ? "bg-emerald-400" : "bg-red-400"}`} />
-                        {tx.type}
-                      </span>
-                    </td>
-                    <td className={`whitespace-nowrap px-4 py-5 text-[15px] font-mono font-bold tracking-wider ${
-                      tx.type === "Income" ? "text-emerald-400" : "text-white"
+                    <div className={`inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-[11px] font-black uppercase tracking-widest border transition-all ${
+                      tx.type === "Income" 
+                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]" 
+                        : "bg-red-500/10 text-red-400 border-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.15)] group-hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]"
                     }`}>
-                      {tx.type === "Income" ? "+" : "-"}${tx.amount.toFixed(2)}
-                    </td>
+                      <div className="relative flex h-2 w-2 mr-1">
+                        <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${tx.type === "Income" ? "bg-emerald-400" : "bg-red-400"}`}></span>
+                        <span className={`relative inline-flex rounded-full h-2 w-2 ${tx.type === "Income" ? "bg-emerald-500" : "bg-red-500"}`}></span>
+                      </div>
+                      {tx.type === "Income" ? <TrendingUp className="w-3.5 h-3.5" /> : <TrendingDown className="w-3.5 h-3.5" />}
+                      {tx.type}
+                    </div>
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-4 align-middle w-48">
+                    <div className="flex flex-col gap-2">
+                      <span className={`text-[15px] font-mono font-bold tracking-wider ${
+                        tx.type === "Income" ? "text-emerald-400" : "text-white"
+                      }`}>
+                        {tx.type === "Income" ? "+" : "-"}${tx.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </span>
+                      {/* Glowing dynamic mini-bar representing volume severity */}
+                      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div 
+                          className={`h-full rounded-full transition-all duration-1000 ease-out ${
+                            tx.type === "Income" 
+                              ? "bg-gradient-to-r from-emerald-600 to-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.8)]" 
+                              : "bg-gradient-to-r from-red-600 to-red-400 shadow-[0_0_10px_rgba(239,68,68,0.8)]"
+                          }`}
+                          style={{ width: `${Math.min((tx.amount / maxAmount) * 100, 100)}%` }}
+                        />
+                      </div>
+                    </div>
+                  </td>
                     {isAdmin && (
                       <td className="relative whitespace-nowrap py-5 pl-3 pr-6 text-right">
                         <button 

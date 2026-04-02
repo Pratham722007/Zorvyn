@@ -41,11 +41,11 @@ export default function DashboardPage() {
         <ExpenseCategoryChart />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         <div className="lg:col-span-2">
-          <TransactionTable />
+          <TransactionTable limit={5} />
         </div>
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 sticky top-8">
           <InsightsPanel />
         </div>
       </div>
