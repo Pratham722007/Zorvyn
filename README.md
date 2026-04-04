@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Zorvyn Finance Dashboard
 
-## Getting Started
+**Your Trusted Partner in Financial Growth.**
 
-First, run the development server:
+Zorvyn is a premium, high-performance financial dashboard built with modern web technologies. It provides a seamless experience for tracking assets, managing transactions, and gaining deep insights into your financial health through beautiful data visualizations.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## ✨ Key Features
+
+-   **🏅 Role-Based Dashboard**: Toggle between **Viewer** and **Admin** roles to control data access and management capabilities.
+-   **📈 Advanced Analytics**: Interactive Area and Pie charts powered by `Recharts` for real-time balance tracking and expense breakdown.
+-   **💸 Transaction Manager**: A robust, split-pane interface to record, categorize, and monitor your income and expenses.
+-   **🎨 Premium UI/UX**: 
+    -   Immersive **video backgrounds** for a modern landing experience.
+    -   Glassmorphism-inspired components with subtle gradients and micro-animations.
+    -   Fully **responsive design** with a mobile-optimized navigation system.
+-   **⚛️ Reactive State Management**: Global context providers for seamless data synchronization across the entire application.
+
+---
+
+## 🛠️ Tech Stack
+
+-   **Framework**: [Next.js 15+](https://nextjs.org/) (App Router)
+-   **Library**: [React 19+](https://reactjs.org/)
+-   **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) & [PostCSS](https://postcss.org/)
+-   **Charts**: [Recharts](https://recharts.org/)
+-   **Icons**: [Lucide React](https://lucide.dev/)
+-   **Language**: [TypeScript](https://www.typescriptlang.org/)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+-   Node.js (Latest LTS recommended)
+-   npm, yarn, or pnpm
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Pratham722007/Zorvyn.git
+   cd Zorvyn
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+---
+
+## 📂 Project Structure
+
+```text
+Zorvyn/
+├── app/                  # Next.js App Router directory
+│   ├── dashboard/        # Dashboard core logic and pages
+│   │   ├── components/   # Reusable UI components (Charts, Tables, etc.)
+│   │   ├── context/      # React Context for Roles and Transactions
+│   │   ├── data/         # Mock data and constants
+│   │   ├── insights/     # Analytics and detailed reporting
+│   │   └── transactions/ # Transaction management system
+│   ├── layout.tsx        # Global layout configuration
+│   └── page.tsx          # Premium landing page
+├── public/               # Static assets
+└── ...                   # Configuration files (Tailwind, TypeScript, ESLint)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔐 Role System
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Zorvyn implements a simplified Role-Based Access Control (RBAC):
 
-## Learn More
+| Role | Permissions |
+| :--- | :--- |
+| **Admin** | Full access. View analytics, add transactions, and manage data. |
+| **Viewer** | Read-only access to analytics and transaction logs. |
 
-To learn more about Next.js, take a look at the following resources:
+*You can switch roles directly from the Dashboard Sidebar to test different permission levels.*
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📜 License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Created with ❤️ by the Pratham.
