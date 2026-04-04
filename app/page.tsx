@@ -20,7 +20,7 @@ export default function Home() {
         <p className="text-xl md:text-2xl font-medium text-white mb-8 drop-shadow">
           Your Trusted Partner in Financial Growth
         </p>
-        <Link 
+        <Link
           href="/dashboard"
           className="bg-[#0088cc] hover:bg-[#0077b3] text-white font-bold py-3 px-8 rounded shadow-lg transition-colors text-sm tracking-wider uppercase"
         >

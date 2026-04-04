@@ -65,7 +65,7 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
 
     // Initial base configuration to mimic the dashboard mock state closely
     return {
-      totalBalance: 24000 + income - expenses, 
+      totalBalance: 24000 + income - expenses,
       totalIncome: income,
       totalExpenses: expenses,
       computedExpenses: expensesArray,
@@ -85,15 +85,15 @@ export function TransactionProvider({ children }: { children: ReactNode }) {
   }, [transactions, totalBalance]);
 
   return (
-    <TransactionContext.Provider value={{ 
-      transactions, 
-      addTransaction, 
-      deleteTransaction, 
-      computedBalance, 
-      computedExpenses, 
-      totalBalance, 
-      totalIncome, 
-      totalExpenses 
+    <TransactionContext.Provider value={{
+      transactions,
+      addTransaction,
+      deleteTransaction,
+      computedBalance,
+      computedExpenses,
+      totalBalance,
+      totalIncome,
+      totalExpenses
     }}>
       {children}
     </TransactionContext.Provider>

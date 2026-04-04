@@ -22,8 +22,8 @@ export default function TransactionTable({ limit }: { limit?: number }) {
   }
 
   // Calculate max amount for the visual volume bars
-  const maxAmount = filteredTransactions.length > 0 
-    ? Math.max(...filteredTransactions.map(tx => tx.amount)) 
+  const maxAmount = filteredTransactions.length > 0
+    ? Math.max(...filteredTransactions.map(tx => tx.amount))
     : 1;
 
   return (
@@ -79,42 +79,39 @@ export default function TransactionTable({ limit }: { limit?: number }) {
                     <td className="whitespace-nowrap py-5 pl-6 pr-3 text-sm text-[#888] font-mono tracking-tight">{tx.date}</td>
                     <td className="whitespace-nowrap px-4 py-5 text-sm font-bold text-[#e5e5e5]">{tx.category}</td>
                     <td className="whitespace-nowrap px-4 py-5 text-sm">
-                    <div className={`inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-[11px] font-black uppercase tracking-widest border transition-all ${
-                      tx.type === "Income" 
-                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]" 
-                        : "bg-red-500/10 text-red-400 border-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.15)] group-hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]"
-                    }`}>
-                      <div className="relative flex h-2 w-2 mr-1">
-                        <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${tx.type === "Income" ? "bg-emerald-400" : "bg-red-400"}`}></span>
-                        <span className={`relative inline-flex rounded-full h-2 w-2 ${tx.type === "Income" ? "bg-emerald-500" : "bg-red-500"}`}></span>
+                      <div className={`inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-[11px] font-black uppercase tracking-widest border transition-all ${tx.type === "Income"
+                          ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+                          : "bg-red-500/10 text-red-400 border-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.15)] group-hover:shadow-[0_0_20px_rgba(239,68,68,0.3)]"
+                        }`}>
+                        <div className="relative flex h-2 w-2 mr-1">
+                          <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${tx.type === "Income" ? "bg-emerald-400" : "bg-red-400"}`}></span>
+                          <span className={`relative inline-flex rounded-full h-2 w-2 ${tx.type === "Income" ? "bg-emerald-500" : "bg-red-500"}`}></span>
+                        </div>
+                        {tx.type === "Income" ? <TrendingUp className="w-3.5 h-3.5" /> : <TrendingDown className="w-3.5 h-3.5" />}
+                        {tx.type}
                       </div>
-                      {tx.type === "Income" ? <TrendingUp className="w-3.5 h-3.5" /> : <TrendingDown className="w-3.5 h-3.5" />}
-                      {tx.type}
-                    </div>
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-4 align-middle w-48">
-                    <div className="flex flex-col gap-2">
-                      <span className={`text-[15px] font-mono font-bold tracking-wider ${
-                        tx.type === "Income" ? "text-emerald-400" : "text-white"
-                      }`}>
-                        {tx.type === "Income" ? "+" : "-"}${tx.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                      </span>
-                      {/* Glowing dynamic mini-bar representing volume severity */}
-                      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div 
-                          className={`h-full rounded-full transition-all duration-1000 ease-out ${
-                            tx.type === "Income" 
-                              ? "bg-gradient-to-r from-emerald-600 to-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.8)]" 
-                              : "bg-gradient-to-r from-red-600 to-red-400 shadow-[0_0_10px_rgba(239,68,68,0.8)]"
-                          }`}
-                          style={{ width: `${Math.min((tx.amount / maxAmount) * 100, 100)}%` }}
-                        />
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-4 align-middle w-48">
+                      <div className="flex flex-col gap-2">
+                        <span className={`text-[15px] font-mono font-bold tracking-wider ${tx.type === "Income" ? "text-emerald-400" : "text-white"
+                          }`}>
+                          {tx.type === "Income" ? "+" : "-"}${tx.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </span>
+                        {/* Glowing dynamic mini-bar representing volume severity */}
+                        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full transition-all duration-1000 ease-out ${tx.type === "Income"
+                                ? "bg-gradient-to-r from-emerald-600 to-emerald-400 shadow-[0_0_10px_rgba(16,185,129,0.8)]"
+                                : "bg-gradient-to-r from-red-600 to-red-400 shadow-[0_0_10px_rgba(239,68,68,0.8)]"
+                              }`}
+                            style={{ width: `${Math.min((tx.amount / maxAmount) * 100, 100)}%` }}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
                     {isAdmin && (
                       <td className="relative whitespace-nowrap py-5 pl-3 pr-6 text-right">
-                        <button 
+                        <button
                           onClick={() => deleteTransaction(tx.id)}
                           className="p-2 rounded-xl text-[#555] opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500/20 hover:text-red-400 hover:shadow-[0_0_15px_rgba(239,68,68,0.3)]"
                           title="Delete Transaction"
